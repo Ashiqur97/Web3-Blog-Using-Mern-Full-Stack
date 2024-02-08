@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { TextInput,Label, Button } from "flowbite-react"
+import { useState } from 'react';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({})
@@ -7,8 +8,19 @@ export default function SignUp() {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value
-    })
-    console.log(formData)
+    });
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+    } catch(error){}
   }
   return (
     <div className="min-h-screen mt-20">
@@ -34,7 +46,7 @@ export default function SignUp() {
                 type='text'
                 placeholder='Username'
                 id='username'
-                onChange={}
+                onChange={handleChange}
               />
               </div>
 
@@ -44,17 +56,17 @@ export default function SignUp() {
                 type='text'
                 placeholder='user@gmail.com'
                 id='email'
-                onChange={}
+                onChange={handleChange}
               />
               </div>
 
               <div>
                 <Label value='Your Password' />
               <TextInput
-                type='text'
+                type='password'
                 placeholder='password'
                 id='password'
-                onChange={}
+                onChange={handleChange}
               />
               </div>
               <Button gradientDuoTone="purpleToBlue" type="submit">
