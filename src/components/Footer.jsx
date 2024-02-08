@@ -17,6 +17,10 @@ export default function FooterCom() {
               Blog
             </Link>
                 </div>  
+                <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
+                    <Footer.Title title='About' />
+                    
+                </div>
             </div>
         </div>
     </Footer>
