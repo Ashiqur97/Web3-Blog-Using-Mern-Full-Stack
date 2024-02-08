@@ -1,12 +1,15 @@
 /* eslint-disable no-unused-vars */
-import { Link } from "react-router-dom"
-import { TextInput,Label, Button, Alert } from "flowbite-react"
+import { TextInput,Label, Button,Spinner, Alert } from "flowbite-react"
 import { useState } from 'react';
+import { set } from "mongoose";
+import { Link,useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -19,6 +22,8 @@ export default function SignUp() {
       return setErrorMessage('Please Fill out All fields');
     }
     try {
+      setLoading(true);
+      setErrorMessage(null);
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,8 +33,13 @@ export default function SignUp() {
       if(data.success === false) {
         return setErrorMessage(data.message);
       }
+      setLoading(false);
+      if(res.ok) {
+        navigate('/sign-in');
+      }
     } catch (error) { 
-      setErrorMessage(error.message)
+      setErrorMessage(error.message);
+      setLoading(false);
      }
   };
   return (
@@ -79,8 +89,15 @@ export default function SignUp() {
                 onChange={handleChange}
               />
               </div>
-              <Button gradientDuoTone="purpleToBlue" type="submit">
-                  Sign Up
+              <Button gradientDuoTone="purpleToBlue" type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Spinner size='sm' />
+                  <span className='pl-3'>Loading...</span>
+                </>
+              ) : (
+                'Sign Up'
+              )}
                 </Button>
             </form>
             <div className="flex gap-2 text-sm mt-5">
