@@ -1,18 +1,23 @@
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom"
-import { TextInput,Label, Button } from "flowbite-react"
+import { TextInput,Label, Button, Alert } from "flowbite-react"
 import { useState } from 'react';
 
 export default function SignUp() {
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value.trim(),
     });
-  }
-
-  const handleSubmit = async (e) => {
+  };
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    if(!formData.username || !formData.email || !formData.password) {
+      return setErrorMessage('Please Fill out All fields');
+    }
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -20,8 +25,13 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-    } catch(error){}
-  }
+      if(data.success === false) {
+        return setErrorMessage(data.message);
+      }
+    } catch (error) { 
+      setErrorMessage(error.message)
+     }
+  };
   return (
     <div className="min-h-screen mt-20">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
@@ -79,6 +89,13 @@ export default function SignUp() {
               Sign In
             </Link>
             </div>
+            {
+              errorMessage && (
+                <Alert className="mt-5" color='failure'>
+                    {errorMessage}
+                </Alert>
+              )
+            }
           </div>
       </div>
     </div>
