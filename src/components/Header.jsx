@@ -3,10 +3,12 @@ import { Link,useLocation } from 'react-router-dom';
 import { Navbar, TextInput, Button, Dropdown, Avatar, DropdownHeader } from 'flowbite-react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon } from 'react-icons/fa';
-import { useSelector} from 'react-redux';
+import { useSelector,useDispatch} from 'react-redux';
+import { toggleTheme } from '../redux/theme/themeSlice';
 
 export default function Header() {
   const path = useLocation().pathname;
+  const dispatch = useDispatch();
   const {currentUser} = useSelector(state => state.user)
 
   return (
@@ -29,7 +31,9 @@ export default function Header() {
       <div className='flex gap-2 md:order-2'>
         <Button className='w-12 h-10 hidden sm:inline'
           color='gray'
-          pill>
+          pill
+          onClick={() => dispatch(toggleTheme())}
+          >
           <FaMoon />
         </Button>
           {currentUser ? (
