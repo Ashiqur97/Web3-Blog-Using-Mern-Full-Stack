@@ -1,8 +1,7 @@
-import express from 'express';
-import  {test} from '../controllers/user.controller.js';
+export const test = (req, res) => {
+    res.json({message: 'API is working fine!'});
+}
 
-const router = express.Router();
-
-router.get('/test', test);
-
-export default router;
+export const updateUser = async (req,res,next) => {
+    
+}
