@@ -8,7 +8,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { app } from '../firebase';
 import { set } from "mongoose";
 import { updateStart,updateSuccess,updateFailure } from "../redux/user/userSlice";
-import { UseDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 
 export default function DashProfile() {
   const {currentUser} = useSelector(state => state.user)
@@ -17,10 +17,10 @@ export default function DashProfile() {
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [formData,setFormData] = useState({})
-
+  const [imageFileUploading, setImageFileUploading] = useState(false);
 
   const filePickerRef = useRef();
-  const dispatch = UseDispatch();
+  const dispatch = useDispatch();
   const handleImageChange = (e) => {
     const file = (e.target.files[0]);
     if(file) {
@@ -81,17 +81,18 @@ export default function DashProfile() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(Object.keys(formData).length === 0) {
+    if (Object.keys(formData).length === 0) {
       return;
     }
+
     try {
       dispatch(updateStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
+      const res = await fetch(`/api/user/update/${currentUser._id}`,{
+        method:"PUT",
+        headers:{
+          'Content-Type':'application/json',
         },
-        body: JSON.stringify(formData),
+        body:JSON.stringify(formData)
       });
       const data = await res.json();
       if (!res.ok) {
