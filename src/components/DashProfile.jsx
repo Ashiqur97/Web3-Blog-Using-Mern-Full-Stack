@@ -18,6 +18,8 @@ export default function DashProfile() {
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(false);
+  const [updateUserError, setUpdateUserError] = useState(null);
+
   const [formData, setFormData] = useState({});
 
   const filePickerRef = useRef();
@@ -86,10 +88,14 @@ export default function DashProfile() {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
     if (Object.keys(formData).length === 0) {
+      setUpdateUserError('No changes made');
       return;
     }
     if(imageFileUploading){
+      setUpdateUserError('Image is still uploading');
       return;
     }
 
@@ -105,7 +111,7 @@ export default function DashProfile() {
       const data = await res.json();
       if (!res.ok) {
         dispatch(updateFailure(data.message));
-
+        setUpdateUserError(data.message);
       } else {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
@@ -187,6 +193,11 @@ export default function DashProfile() {
       {updateUserSuccess && (
         <Alert color='success' className="mt-5">
           {updateUserSuccess}
+        </Alert>
+      )}
+        {updateUserError && (
+        <Alert color='failure' className='mt-5'>
+          {updateUserError}
         </Alert>
       )}
     </div>
