@@ -25,35 +25,34 @@ export default function DashProfile() {
   const filePickerRef = useRef();
   const dispatch = useDispatch();
   const handleImageChange = (e) => {
-    const file = (e.target.files[0]);
-    if(file) {
+    const file = e.target.files[0];
+    if (file) {
       setImageFile(file);
       setImageFileUrl(URL.createObjectURL(file));
     }
-
-  }
+  };
   useEffect(() => {
-    if(imageFile) {
+    if (imageFile) {
       uploadImage();
     }
-  },[imageFile])
+  }, [imageFile]);
 
   const uploadImage = async () => {
     // service firebase.storage {
     //   match /b/{bucket}/o {
     //     match /{allPaths=**} {
-    //       allow read; 
+    //       allow read;
     //       allow write: if
-    //       request.resource.size < 2 *1024 *1024 &&
-    //       request.resource.contentType.matches('/image/.*')
+    //       request.resource.size < 2 * 1024 * 1024 &&
+    //       request.resource.contentType.matches('image/.*')
     //     }
     //   }
     // }
     setImageFileUploading(true);
     setImageFileUploadError(null);
     const storage = getStorage(app);
-    const fileName = new Date().getTime() + '-' + imageFile.name;
-    const storageRef = ref(storage,fileName);
+    const fileName = new Date().getTime() + imageFile.name;
+    const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
     uploadTask.on(
       'state_changed',
@@ -75,7 +74,7 @@ export default function DashProfile() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageFileUrl(downloadURL);
-          setFormData({...formData,profilePicture:downloadURL});
+          setFormData({ ...formData, profilePicture: downloadURL });
           setImageFileUploading(false);
         });
       }
@@ -83,9 +82,9 @@ export default function DashProfile() {
   };
 
   const handleChange = (e) => {
-    setFormData({...formData,[e.target.id]:e.target.value})
-  }
-  
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdateUserError(null);
@@ -94,19 +93,18 @@ export default function DashProfile() {
       setUpdateUserError('No changes made');
       return;
     }
-    if(imageFileUploading){
-      setUpdateUserError('Image is still uploading');
+    if (imageFileUploading) {
+      setUpdateUserError('Please wait for image to upload');
       return;
     }
-
     try {
       dispatch(updateStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`,{
-        method:"PUT",
-        headers:{
-          'Content-Type':'application/json',
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        body:JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -118,6 +116,7 @@ export default function DashProfile() {
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
     }
   };
 
