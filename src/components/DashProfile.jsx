@@ -6,13 +6,12 @@ import {getStorage,ref, uploadBytesResumable,getDownloadURL} from 'firebase/stor
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { app } from '../firebase';
-import { Model, set } from "mongoose";
-import { updateStart,updateSuccess,updateFailure } from "../redux/user/userSlice";
+import { updateStart,updateSuccess,updateFailure,deleteUserFailure,deleteUserStart,deleteUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export default function DashProfile() {
-  const {currentUser} = useSelector(state => state.user)
+  const {currentUser,error} = useSelector(state => state.user)
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -122,8 +121,24 @@ export default function DashProfile() {
     }
   };
 
-  const handleDeleteUser = async () => {}
-
+  const handleDeleteUser = async () => {
+    setShowModal(false);
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(deleteUserFailure(data.message));
+      } else {
+        dispatch(deleteUserSuccess(data));
+      }
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+  
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -189,20 +204,30 @@ export default function DashProfile() {
         />
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>Update</Button>
       </form>
-      <div className="text-red-500 flex justify-between mt-5">
-        <span onClick={() => setShowModal(true)} className="cursor-pointer">Delete Account</span>
-        <span className="cursor-pointer">Signout</span>
+      <div className='text-red-500 flex justify-between mt-5'>
+        <span onClick={() => setShowModal(true)} className='cursor-pointer'>
+          Delete Account
+        </span>
+        <span className='cursor-pointer'>
+          Sign Out
+        </span>
       </div>
       {updateUserSuccess && (
-        <Alert color='success' className="mt-5">
+        <Alert color='success' className='mt-5'>
           {updateUserSuccess}
         </Alert>
       )}
-        {updateUserError && (
+      {updateUserError && (
         <Alert color='failure' className='mt-5'>
           {updateUserError}
         </Alert>
       )}
+      {error && (
+        <Alert color='failure' className='mt-5'>
+          {error}
+        </Alert>
+      )}
+
       <Modal show={showModal} 
       onClose={() => setShowModal(false)} 
       popup
