@@ -19,8 +19,7 @@ export default function CreatePost() {
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
-//   const [publishError, setPublishError] = useState(null);
-
+  const [publishError, setPublishError] = useState(null);
   const navigate = useNavigate();
 
   const handleUpdloadImage = async () => {
@@ -62,7 +61,7 @@ export default function CreatePost() {
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
       <h1 className='text-center text-3xl my-7 font-semibold'>Create a post</h1>
-      <form className='flex flex-col gap-4'>
+      <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
             type='text'
@@ -120,7 +119,12 @@ export default function CreatePost() {
           />
         )}
             <ReactQuill theme="snow" placeholder="Write Something" 
-            className='h-72 mb-12' required />
+            className='h-72 mb-12' 
+            required 
+            onChange={(value) => {
+                setFormData({ ...formData, content: value });
+            }}
+            />
             <Button type="submit" gradientDuoTone='purpleToBlue'>Publish</Button>
         </form>
     </div>
