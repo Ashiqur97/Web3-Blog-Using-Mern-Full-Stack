@@ -1,19 +1,31 @@
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
 import {useSelector} from "react-redux"
 
 export default function DashPosts() {
   const {currentUser} = useSelector(state => state.user)
+  const [userPosts, setUserPosts] = useState([])
+  const [showMore, setShowMore] = useState(true);
+  
+  console.log(userPosts);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("/api/post/getPosts?userId=1")
-        const data = await res.json()
-        console.log(data)
+        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+        const data = await res.json();
+        if (res.ok) {
+          setUserPosts(data.posts);
+          if (data.posts.length < 9) {
+            setShowMore(false);
+          }
+        }
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
+    };
+    if (currentUser.isAdmin) {
+      fetchPosts();
     }
-  },[])
+  }, [currentUser._id]);
   return (
     <div>
         DashPost
