@@ -39,9 +39,14 @@ export const getposts = async (req, res, next) => {
             ...(req.query.postId && { _id: req.query.postId }),
             ...(req.query.searchItem && {
                 $sort:[
-                    
+                    { title: { $regex: req.query.searchTerm, $options: 'i' } },
+                    { content: { $regex: req.query.searchTerm, $options: 'i' } },
                 ]
             })
+        }).sort({updatedAt:sortDirection}).skip(startIndex).limit(limit);
+
+        const totalPosts = await Post.countDocuments();
+        
     } catch (error) {
         next(error);
     }
