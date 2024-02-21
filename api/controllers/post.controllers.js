@@ -46,7 +46,19 @@ export const getposts = async (req, res, next) => {
         }).sort({updatedAt:sortDirection}).skip(startIndex).limit(limit);
 
         const totalPosts = await Post.countDocuments();
-        
+
+        const now = new Date();
+    
+        const oneMonthAgo = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          now.getDate()
+        );
+
+        const lastMonthPosts = await Post.countDocuments({
+            createdAt: { $gte: oneMonthAgo },
+          });
+          
     } catch (error) {
         next(error);
     }
