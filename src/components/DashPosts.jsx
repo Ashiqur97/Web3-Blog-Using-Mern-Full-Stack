@@ -1,3 +1,4 @@
+import { Table, TableHeadCell } from "flowbite-react";
 import { useEffect,useState } from "react"
 import {useSelector} from "react-redux"
 
@@ -5,7 +6,7 @@ export default function DashPosts() {
   const {currentUser} = useSelector(state => state.user)
   const [userPosts, setUserPosts] = useState([])
   const [showMore, setShowMore] = useState(true);
-  
+
   console.log(userPosts);
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,7 +29,15 @@ export default function DashPosts() {
   }, [currentUser._id]);
   return (
     <div>
-        DashPost
+        {currentUser.isAdmin && userPosts.length > 0 ? (
+          <Table hoverable className="shadow-md">
+              <Table.Head>
+                  <Table.HeadCell>Date updated</Table.HeadCell>
+              </Table.Head>
+          </Table>
+        ) : (
+          <p>No posts to show</p>
+        )}
     </div>
   )
 }
