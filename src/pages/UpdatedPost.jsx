@@ -9,10 +9,10 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 
 export default function UpdatePost() {
   const [file, setFile] = useState(null);
@@ -20,8 +20,17 @@ export default function UpdatePost() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
+    const { postId } = useParams();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+  },[postId])
 
   const handleUpdloadImage = async () => {
     try {
