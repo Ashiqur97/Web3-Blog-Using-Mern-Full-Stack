@@ -70,5 +70,14 @@ export const getposts = async (req, res, next) => {
 }
 
 export const deletepost = async (req, res, next) => {
-    
-}
+    if(!req.user.isAdmin){
+        res.status(200).json('The post has been deleted');
+    } 
+
+    try {
+        await Post.findByIdAndDelete(req.params.postId);
+        res.status(200).json('The post has been deleted');
+    } catch (error) {
+        next(error);
+    }
+};
