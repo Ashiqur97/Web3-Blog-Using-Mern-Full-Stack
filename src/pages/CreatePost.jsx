@@ -104,9 +104,9 @@ export default function CreatePost() {
             }
           >
             <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>Web3 Basic and solidity</option>
-            <option value='reactjs'>Defi And Ethereum</option>
-            <option value='nextjs'>Smart Contract Audit</option>
+            <option value='web3'>Web3 Basic and solidity</option>
+            <option value='web3'>Defi And Ethereum</option>
+            <option value='web3'>Smart Contract Audit</option>
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
