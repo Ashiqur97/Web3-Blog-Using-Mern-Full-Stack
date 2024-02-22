@@ -126,6 +126,7 @@ export default function UpdatePost() {
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
+            value={formData.category}
           >
             <option value='uncategorized'>Select a category</option>
             <option value='web3'>Web3 Basic and solidity</option>
@@ -169,6 +170,7 @@ export default function UpdatePost() {
         )}
         <ReactQuill
           theme='snow'
+            value={formData.content}
           placeholder='Write something...'
           className='h-72 mb-12'
           required
