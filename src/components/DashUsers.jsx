@@ -4,6 +4,7 @@ import { useEffect,useState } from "react"
 import {useSelector} from "react-redux"
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 export default function DashUsers() {
   const {currentUser} = useSelector(state => state.user)
@@ -20,7 +21,7 @@ export default function DashUsers() {
         const data = await res.json();
         if (res.ok) {
             setUsers(data.users);
-            if (data.users.length < 9) {
+            if (data.users.length < 5) {
               setShowMore(false);
           }
         }
@@ -69,7 +70,7 @@ export default function DashUsers() {
               </Table.Head>
               {users.map((user) => (
               // eslint-disable-next-line react/jsx-key
-              <Table.Body className='divide-y'>
+              <Table.Body className='divide-y' key={user._id}>
                 <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                   <Table.Cell>
                     {new Date(user.createdAt).toLocaleDateString()}
@@ -79,12 +80,19 @@ export default function DashUsers() {
                       <img
                             src={user.profilePicture}
                             alt={user.username}
-                        className='w-20 h-10 object-cover bg-gray-500'
+                            className='w-10 h-10 object-cover bg-gray-500 rounded-full'
                       />
                     
                   </Table.Cell>
                   <Table.Cell>{user.username}</Table.Cell>
                   <Table.Cell>{user.email}</Table.Cell>
+                  <Table.Cell>
+                    {user.isAdmin ? (
+                      <FaCheck className='text-green-500' />
+                    ) : (
+                      <FaTimes className='text-red-500' />
+                    )}
+                  </Table.Cell>
                   <Table.Cell>
                  
                       {user.username}
