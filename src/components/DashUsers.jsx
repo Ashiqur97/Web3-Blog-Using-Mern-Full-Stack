@@ -49,7 +49,9 @@ export default function DashUsers() {
     }
   }
 
+    const handleDeleteUser = async () => {
 
+    }
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -73,41 +75,32 @@ export default function DashUsers() {
                     {new Date(user.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/post/${post.slug}`}>
+                    
                       <img
-                        src={post.image}
-                        alt={post.title}
+                            src={user.profilePicture}
+                            alt={user.username}
                         className='w-20 h-10 object-cover bg-gray-500'
                       />
-                    </Link>
+                    
                   </Table.Cell>
+                  <Table.Cell>{user.username}</Table.Cell>
+                  <Table.Cell>{user.email}</Table.Cell>
                   <Table.Cell>
-                    <Link
-                      className='font-medium text-gray-900 dark:text-white'
-                      to={`/post/${post.slug}`}
-                    >
-                      {post.title}
-                    </Link>
+                 
+                      {user.username}
+                
                   </Table.Cell>
                   {/* <Table.Cell>{post.category}</Table.Cell> */}
                   <Table.Cell>
                     <span
                       onClick={() => {
                         setShowModal(true);
-                        setPostIdToDelete(post._id);
+                        setUserIdToDelete(user._id);
                       }}
                       className='font-medium text-red-500 hover:underline cursor-pointer'
                     >
                       Delete
                     </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Link
-                      className='text-teal-500 hover:underline'
-                      to={`/update-post/${post._id}`}
-                    >
-                      <span>Edit</span>
-                    </Link>
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
@@ -123,7 +116,7 @@ export default function DashUsers() {
             )}
           </>
         ) : (
-          <p>You have no posts yet!</p>
+          <p>You have no users yet!</p>
         )}
 
 <Modal
@@ -140,7 +133,7 @@ export default function DashUsers() {
               Are you sure you want to delete this post?
             </h3>
             <div className='flex justify-center gap-4'>
-              <Button color='failure' onClick={handleDeletePost}>
+              <Button color='failure' onClick={handleDeleteUser}>
                 Yes, I'm sure
               </Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
