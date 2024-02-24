@@ -4,23 +4,24 @@ import { useEffect,useState } from "react"
 import {useSelector} from "react-redux"
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-export default function DashPosts() {
+
+export default function DashUsers() {
   const {currentUser} = useSelector(state => state.user)
-  const [userPosts, setUserPosts] = useState([])
+  const [users, setUsers] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [postIdToDelete, setPostIdToDelete] = useState('');
+  const [userIdToDelete, setUserIdToDelete] = useState('');
 
   // console.log(userPosts);
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+        const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
         if (res.ok) {
-          setUserPosts(data.posts);
-          if (data.posts.length < 9) {
-            setShowMore(false);
+            setUsers(data.users);
+            if (data.users.length < 9) {
+              setShowMore(false);
           }
         }
       } catch (error) {
@@ -28,7 +29,7 @@ export default function DashPosts() {
       }
     };
     if (currentUser.isAdmin) {
-      fetchPosts();
+      fetchUsers();
     }
   }, [currentUser._id]);
 
@@ -78,14 +79,13 @@ export default function DashPosts() {
           <>
           <Table hoverable className="shadow-md">
               <Table.Head>
-                  <Table.HeadCell>Date updated</Table.HeadCell>
-                  <Table.HeadCell>Post image</Table.HeadCell>
-                  <Table.HeadCell>Post title</Table.HeadCell>
-                  {/* <Table.HeadCell>Category</Table.HeadCell> */}
-                  <Table.HeadCell>Delete</Table.HeadCell>
-                  <TableHeadCell>
-                    <span>Edit</span>
-                  </TableHeadCell>
+              <Table.HeadCell>Date created</Table.HeadCell>
+              <Table.HeadCell>User image</Table.HeadCell>
+              <Table.HeadCell>Username</Table.HeadCell>
+              <Table.HeadCell>Email</Table.HeadCell>
+              <Table.HeadCell>Admin</Table.HeadCell>
+              <Table.HeadCell>Delete</Table.HeadCell>
+
               </Table.Head>
               {userPosts.map((post) => (
               // eslint-disable-next-line react/jsx-key
