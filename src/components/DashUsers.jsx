@@ -49,31 +49,11 @@ export default function DashUsers() {
     }
   }
 
-  const handleDeleteUser = async () => {
-    setShowModal(false);
-    try {
-      const res = await fetch(
-        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
-        {
-          method: 'DELETE',
-        }
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        console.log(data.message);
-      } else {
-        setUserPosts((prev) =>
-          prev.filter((post) => post._id !== postIdToDelete)
-        );
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        {currentUser.isAdmin && userPosts.length > 0 ? (
+        {currentUser.isAdmin && users.length > 0 ? (
           <>
           <Table hoverable className="shadow-md">
               <Table.Head>
@@ -85,12 +65,12 @@ export default function DashUsers() {
               <Table.HeadCell>Delete</Table.HeadCell>
 
               </Table.Head>
-              {userPosts.map((post) => (
+              {users.map((user) => (
               // eslint-disable-next-line react/jsx-key
               <Table.Body className='divide-y'>
                 <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                   <Table.Cell>
-                    {new Date(post.updatedAt).toLocaleDateString()}
+                    {new Date(user.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
                     <Link to={`/post/${post.slug}`}>
