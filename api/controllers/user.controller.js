@@ -88,6 +88,21 @@ export const getUsers = async (req, res, next) => {
       .sort({ createdAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
+
+      const usersWithoutPassword = users.map((user) => {
+        const { password, ...rest } = user._doc;
+        return rest;
+      });
+
+      const totalUsers = await User.countDocuments();
+
+      const now = new Date();
+
+      const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      );
       
   } catch (error) {
     next(error);
