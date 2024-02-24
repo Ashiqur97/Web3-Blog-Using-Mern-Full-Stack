@@ -34,15 +34,13 @@ export default function DashUsers() {
   }, [currentUser._id]);
 
   const handleShowMore = async () => {
-    const startIndex = userPosts.length;
+    const startIndex = users.length;
     try {
-      const res = await fetch(
-        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
-      );
+    const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
       const data = await res.json();
       if (res.ok) {
-        setUserPosts((prev) => [...prev, ...data.posts]);
-        if (data.posts.length < 9) {
+        setUsers((prev) => [...prev, ...data.users]);
+        if (data.users.length < 9) {
           setShowMore(false);
         }
       }
@@ -51,7 +49,7 @@ export default function DashUsers() {
     }
   }
 
-  const handleDeletePost = async () => {
+  const handleDeleteUser = async () => {
     setShowModal(false);
     try {
       const res = await fetch(
