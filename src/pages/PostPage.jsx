@@ -27,7 +27,9 @@ export default function PostPage() {
                 setLoading(false);
            }    
         }
+        fetchPost();
     },[postSlug])
+    if(loading) return <div>Loading...</div>
 
   return (
     <div>
