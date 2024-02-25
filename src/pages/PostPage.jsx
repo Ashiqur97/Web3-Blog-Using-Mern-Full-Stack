@@ -17,9 +17,15 @@ export default function PostPage() {
                 setLoading(false);
                 return;
             }
+            if(res.ok){
+                setPost(data.posts[0]);
+                setLoading(false);
+                setError(false);
+            }
            } catch (error) {
-
-           }
+                setError(true);
+                setLoading(false);
+           }    
         }
     },[postSlug])
 
