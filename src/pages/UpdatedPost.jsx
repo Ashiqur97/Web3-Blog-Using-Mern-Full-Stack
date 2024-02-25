@@ -65,7 +65,6 @@ export default function UpdatePost() {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setImageUploadProgress(progress.toFixed(0));
         },
-        // eslint-disable-next-line no-unused-vars
         (error) => {
           setImageUploadError('Image upload failed');
           setImageUploadProgress(null);
@@ -128,12 +127,12 @@ export default function UpdatePost() {
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
-            // value={formData.category}
+            value={formData.category}
           >
             <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>Web3 Basic</option>
-            <option value='reactjs'>Smart Contract Audit</option>
-            <option value='nextjs'>Ethereum</option>
+            <option value='javascript'>JavaScript</option>
+            <option value='reactjs'>React.js</option>
+            <option value='nextjs'>Next.js</option>
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
