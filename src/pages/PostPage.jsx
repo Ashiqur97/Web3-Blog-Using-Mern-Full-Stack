@@ -1,6 +1,7 @@
-import { Spinner } from "flowbite-react";
+/* eslint-disable no-unused-vars */
+import { Spinner,Button } from "flowbite-react";
 import { useEffect,useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams,Link } from "react-router-dom"
 
 export default function PostPage() {
     const {postSlug} = useParams();
@@ -42,15 +43,15 @@ export default function PostPage() {
         <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>
         {post && post.title}
       </h1>
-    </main>
-  )
-}
-
-{/* <Link
+      <Link
 to={`/search?category=${post && post.category}`}
 className='self-center mt-5'
 >
 <Button color='gray' pill size='xs'>
   {post && post.category}
 </Button>
-</Link> */}
+</Link>
+    </main>
+  )
+}
+
