@@ -51,6 +51,11 @@ className='self-center mt-5'
   {post && post.category}
 </Button>
 </Link>
+    <img
+        src={post && post.image}
+        alt={post && post.title}
+        className='mt-10 p-3 max-h-[600px] w-full object-cover'
+      />
     </main>
   )
 }
