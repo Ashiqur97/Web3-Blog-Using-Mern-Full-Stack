@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import { TextInput, Button,Textarea } from 'flowbite-react';
 import {useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -28,6 +29,22 @@ export default function CommentSection({postId}) {
                 </div>
         )
     }
+    {currentUser && (
+        <form>
+            <Textarea 
+            placeholder='Add a comment' 
+            rows='3'
+            maxLength='200' />
+            <div className=''>
+                <p>200 character remaining</p>
+                <Button outline 
+                gradientDuoTone='purpleToBlue' 
+                type='submit'>
+                    Submit 
+                </Button>
+            </div>
+        </form>
+    )}
     </div>
   )
 }
