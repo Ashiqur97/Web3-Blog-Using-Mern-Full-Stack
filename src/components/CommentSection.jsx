@@ -8,6 +8,9 @@ import { useState } from 'react';
 export default function CommentSection({postId}) {
     const {currentUser} = useSelector(state => state.user);
     const [comment,setComment] = useState('');
+    const handleSubmit = async (e) => {
+        
+    };
 
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
@@ -33,7 +36,7 @@ export default function CommentSection({postId}) {
         )
     }
     {currentUser && (
-        <form className='border border-teal-500 rounded-md p-3'>
+        <form  onSubmit={handleSubmit} className='border border-teal-500 rounded-md p-3'>
             <Textarea 
             placeholder='Add a comment' 
             rows='3'
