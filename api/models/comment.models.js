@@ -14,5 +14,13 @@ const commentSchema = new mongoose.Schema(
             type:String,
             required:true,
         },
-    }
-);
+        numberOfLikes: {
+            type: Number,
+            default: 0,
+          },
+        },
+        { timestamps: true }
+      );
+      const Comment = mongoose.model('Comment', commentSchema);
+      
+      export default Comment;
