@@ -11,7 +11,7 @@ export default function CommentSection(postId) {
                 <p>Signed in as:</p>
                 <img  className='h-5 w-5 object-cover rounded-full' 
                 src={currentUser.profilePicture} alt=''/>
-                <Link className='text-blue-500 hover:underline' to={'/dashboard?tag=profile'}>
+                <Link className='text-blue-500 hover:underline' to={'/dashboard?tab=profile'}>
                     @ {currentUser.username}
                 </Link>
                 </div>
