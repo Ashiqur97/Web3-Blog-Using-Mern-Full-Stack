@@ -1,4 +1,5 @@
 import {useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function CommentSection(postId) {
     const {currentUser} = useSelector(state => state.user);
@@ -15,7 +16,14 @@ export default function CommentSection(postId) {
                 </div>
         ) 
         :
-        ()
+        (
+            <div className=''>
+                    you must be signed in to comment
+                    <Link to={'/sign-in'}>
+                        Sign In 
+                    </Link>
+                </div>
+        )
     }
     </div>
   )
