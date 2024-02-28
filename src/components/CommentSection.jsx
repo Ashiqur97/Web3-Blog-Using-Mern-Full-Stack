@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import {useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export default function CommentSection(postId) {
+export default function CommentSection({postId}) {
     const {currentUser} = useSelector(state => state.user);
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
