@@ -21,7 +21,13 @@ export default function Comment({ comment}) {
   return (
     <div>
         <div className="">
-            <img src={user.profilePicture} alt={user.username} />
+            <img className='w-10 h-10 rounded-full bg-gray-200'
+             src={user.profilePicture} alt={user.username} />
+        </div>
+        <div className="">
+            <div className="">
+                <span>{user ? `@${user.username}` : 'anonymous user'}</span>
+            </div>
         </div>
     </div>
   )
