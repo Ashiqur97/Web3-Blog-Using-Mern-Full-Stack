@@ -3,7 +3,8 @@
 import { Alert,TextInput, Button,Textarea } from 'flowbite-react';
 import {useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { get } from 'mongoose';
 
 export default function CommentSection({postId}) {
     const {currentUser} = useSelector(state => state.user);
@@ -38,6 +39,16 @@ export default function CommentSection({postId}) {
           setCommentError(error.message);
         }
       };
+
+ useEffect(() => {
+  const getComments = async () => {}
+   try {
+    
+   } catch (error) {
+    console.log(error.message);
+   }
+   getComments();
+ },[postId])
 
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
