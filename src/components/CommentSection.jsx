@@ -105,6 +105,16 @@ export default function CommentSection({postId}) {
           )}
         </form>
     )}
+    {comments.length === 0 ? (
+      <p className='text-sm my-5'>no comments yet!</p>
+    ) : (
+      <div className=''>
+        <p>Comments</p>
+      <div className='border border-gray-400 py-1 px-2 rounded-sm'>
+          <p>{comments.length}</p>
+        </div>
+        </div>
+    )}
     </div>
-  )
+  );
 }
