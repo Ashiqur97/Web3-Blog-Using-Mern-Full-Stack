@@ -13,47 +13,48 @@ export default function CommentSection({postId}) {
     const [comments, setComments] = useState([]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (comment.length > 200) {
-          return;
+      e.preventDefault();
+      if (comment.length > 200) {
+        return;
+      }
+      try {
+        const res = await fetch('/api/comment/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: comment,
+            postId,
+            userId: currentUser._id,
+          }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setComment('');
+          setCommentError(null);
+          setComments([data, ...comments]);
         }
+      } catch (error) {
+        setCommentError(error.message);
+      }
+    };
+  
+    useEffect(() => {
+      const getComments = async () => {
         try {
-          const res = await fetch('/api/comment/create', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              content: comment,
-              postId,
-              userId: currentUser._id,
-            }),
-          });
-          const data = await res.json();
+          const res = await fetch(`/api/comment/getPostComments/${postId}`);
           if (res.ok) {
-            setComment('');
-            setCommentError(null);
-            setComments([data, ...comments]);
+            const data = await res.json();
+            setComments(data);
           }
         } catch (error) {
-          setCommentError(error.message);
+          console.log(error.message);
         }
       };
-
- useEffect(() => {
-  const getComments = async () => {
-   try {
-    const res = await fetch(`/api/comment/getPostComments/${postId}`);
-    if(res.ok) {
-      const data = await res.json();
-      setComments(data);
-    }
-   } catch (error) {
-    console.log(error.message);
-   }
-  }
-   getComments();
- },[postId])
+      getComments();
+    }, [postId]);
+  
 
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
