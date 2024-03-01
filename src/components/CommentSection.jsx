@@ -41,12 +41,13 @@ export default function CommentSection({postId}) {
       };
 
  useEffect(() => {
-  const getComments = async () => {}
+  const getComments = async () => {
    try {
-    
+    const res = await fetch(`/api/comment/getPostComments/${postId}`);
    } catch (error) {
     console.log(error.message);
    }
+  }
    getComments();
  },[postId])
 
