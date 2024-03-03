@@ -34,4 +34,6 @@ export const getPostComments = async (req, res, next) => {
   }
 };
 
-
+export const likeComment = async (req, res, next) => {
+  
+}
