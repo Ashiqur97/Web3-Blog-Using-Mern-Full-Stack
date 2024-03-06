@@ -3,7 +3,7 @@ import { useEffect,useState } from "react"
 import moment from 'moment';
 import {FaThumbsUp} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { Textarea } from 'flowbite-react';
+import { Button,Textarea } from 'flowbite-react';
 
 
 // eslint-disable-next-line react/prop-types
@@ -51,14 +51,34 @@ export default function Comment({ comment,onLike }) {
         </span>
       </div>
       {isEditing ? (
-        <Textarea 
+        <>
+           <Textarea 
         className='mb-2'
         value={editedContent}
         onChange={(e) => setEditedContent(e.target.value)}
         />
+          <div className="className='flex justify-end gap-2 text-xs">
+          <Button
+                type='button'
+                size='sm'
+                gradientDuoTone='purpleToBlue'
+              >
+                Save
+              </Button>
+              <Button
+                type='button'
+                size='sm'
+                gradientDuoTone='purpleToBlue'
+                outline
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </Button>
+          </div>
+        </>
+     
       ) : (
         <>
-      
         <p className="text-gray-500 pb-2">{comment.content}</p>
         <div className='flex items-center pt-2 text-xs border-t dark:border-gray-700 max-w-fit gap-2'>
         <button
