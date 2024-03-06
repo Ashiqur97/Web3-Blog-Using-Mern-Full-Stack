@@ -10,6 +10,7 @@ import { Textarea } from 'flowbite-react';
 export default function Comment({ comment,onLike }) {
     const [user,setUser] = useState({});
     const [isEditing, setIsEditing] = useState(false);
+    const [editedContent,setEditedContent] = useState(comment.content);
     const { currentUser } = useSelector((state) => state.user);
     
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function Comment({ comment,onLike }) {
 
     const handleEdit = () => {
       setIsEditing(true);
+      setEditedContent(comment.content);
     }
   return (
     <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
