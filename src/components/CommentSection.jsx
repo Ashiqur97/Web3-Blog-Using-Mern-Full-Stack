@@ -56,6 +56,9 @@ export default function CommentSection({ postId }) {
     getComments();
   }, [postId]);
 
+  const handleLike = async (commentId) => {
+
+  }
 
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
@@ -121,6 +124,7 @@ export default function CommentSection({ postId }) {
               <Comment
                 key={comment._id}
                 comment={comment}
+                onLike={handleLike}
               />
             ))
           }
