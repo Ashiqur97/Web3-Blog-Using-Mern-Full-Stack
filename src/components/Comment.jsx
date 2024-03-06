@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect,useState } from "react"
 import moment from 'moment';
@@ -7,7 +8,7 @@ import { Button,Textarea } from 'flowbite-react';
 
 
 // eslint-disable-next-line react/prop-types
-export default function Comment({ comment,onLike }) {
+export default function Comment({ comment,onLike,onEdit }) {
     const [user,setUser] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent,setEditedContent] = useState(comment.content);
@@ -32,6 +33,9 @@ export default function Comment({ comment,onLike }) {
       setIsEditing(true);
       setEditedContent(comment.content);
     }
+  const handleSave = async () => {
+    
+  };
   return (
     <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
     <div className='flex-shrink-0 mr-3'>
@@ -62,6 +66,7 @@ export default function Comment({ comment,onLike }) {
                 type='button'
                 size='sm'
                 gradientDuoTone='purpleToBlue'
+                onClick={handleSave}
               >
                 Save
               </Button>
