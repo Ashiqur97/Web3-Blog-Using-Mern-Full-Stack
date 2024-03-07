@@ -6,12 +6,16 @@ import { Link,useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // import { get } from 'mongoose';
 import Comment from './Comment';
+import { set } from 'mongoose';
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector(state => state.user);
   const [comment, setComment] = useState('');
   const [commentError, setCommentError] = useState(null);
   const [comments, setComments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -93,6 +97,9 @@ export default function CommentSection({ postId }) {
     );
   };
 
+  const handleDelete = async (commentId) => {
+
+  }
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
       {currentUser ?
@@ -159,6 +166,10 @@ export default function CommentSection({ postId }) {
                 comment={comment}
                 onLike={handleLike}
                 onEdit={handleEdit}
+                onDelete={(commentId) =>{
+                  setShowModal(true);
+                  setCommentToDelete(comment);
+                }}
               />
             ))
           }
