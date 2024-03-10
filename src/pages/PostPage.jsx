@@ -11,6 +11,7 @@ export default function PostPage() {
     const [loading, setLoading] = useState(true);
     const [post, setPost] = useState(null);
     const [error, setError] = useState(null);
+    const [recentPosts,setRecentPosts] = useState(null);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -33,7 +34,15 @@ export default function PostPage() {
            }    
         }
         fetchPost();
-    },[postSlug])
+    },[postSlug]);
+
+    useEffect(() => {
+        try {
+            
+        } catch (error) {
+          console.log(error.message);
+        }
+    }, [])
     if(loading) return
     ( 
     <div className="flex justify-center items-center min-h-screen">
@@ -76,6 +85,9 @@ export default function PostPage() {
       <CommentSection postId={post._id} />
       <div className="flex flex-col justify-center items-center mb-5">
           <h1 className='text-xl mt-5'>Recent articles</h1>
+          <div className="">
+
+          </div>
       </div>  
     </main>
   )
