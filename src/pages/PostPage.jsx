@@ -38,10 +38,13 @@ export default function PostPage() {
 
     useEffect(() => {
         try {
-            
+            const fetchRecentPosts = async () => {
+
+            }
         } catch (error) {
           console.log(error.message);
         }
+        
     }, [])
     if(loading) return
     ( 
