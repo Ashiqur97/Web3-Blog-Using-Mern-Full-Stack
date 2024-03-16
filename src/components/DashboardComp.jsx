@@ -30,21 +30,49 @@ export default function DashboardComp() {
         }
 
         const fetchPosts = async () => {
-        }
+            try {
+              const res = await fetch('/api/post/getposts?limit=5');
+              const data = await res.json();
+              if (res.ok) {
+                setPosts(data.posts);
+                setTotalPosts(data.totalPosts);
+                setLastMonthPosts(data.lastMonthPosts);
+              }
+            } catch (error) {
+              console.log(error.message);
+            }
+          };
 
-        const fetchComments = async () => {
-        }
-
-        if(currentUser.isAdmin){
+          const fetchComments = async () => {
+            try {
+              const res = await fetch('/api/comment/getcomments?limit=5');
+              const data = await res.json();
+              if (res.ok) {
+                setComments(data.comments);
+                setTotalComments(data.totalComments);
+                setLastMonthComments(data.lastMonthComments);
+              }
+            } catch (error) {
+              console.log(error.message);
+            }
+          };
+          if (currentUser.isAdmin) {
             fetchUsers();
             fetchPosts();
             fetchComments();
-        }
-    },[currentUser])
+          }
+        }, [currentUser]);
 
   return (
     <div>
-        DashboardComp
+        <div className="">
+            <div className="">
+                <div className="">
+                    <h3>Total Users</h3>
+                    <p>{totalUsers}</p>
+                </div>
+            </div>
+        </div>
     </div>
   )
 }
