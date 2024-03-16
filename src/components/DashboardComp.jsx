@@ -3,7 +3,7 @@ import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { HiArrowNarrowUp, HiOutlineUserGroup,HiAnnotation,HiDocumentText } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import {Button}  from "flowbite-react";
+import {Button, Table}  from "flowbite-react";
 import { Link } from "react-router-dom";
 
 export default function DashboardComp() {
@@ -128,6 +128,12 @@ export default function DashboardComp() {
                         <Link to={"/dashboard?tab=users"}>See all</Link>
                     </Button>
                 </div>
+                <Table hoverable>
+                    <Table.Head>
+                        <Table.HeadCell>User image</Table.HeadCell>
+                        <Table.HeadCell>Username</Table.HeadCell>
+                    </Table.Head>
+                </Table>
             </div>
       </div>
       </div>
