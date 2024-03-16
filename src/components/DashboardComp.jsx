@@ -3,6 +3,8 @@ import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { HiArrowNarrowUp, HiOutlineUserGroup,HiAnnotation,HiDocumentText } from "react-icons/hi";
 import { useSelector } from "react-redux";
+import {Button}  from "flowbite-react";
+import { Link } from "react-router-dom";
 
 export default function DashboardComp() {
     const [users, setUsers] = useState([]);
@@ -118,6 +120,17 @@ export default function DashboardComp() {
           </div>
         </div>
       </div>
+      <div className="flex flex-wrap gap-4 py-3 mx-auto justify-center">
+            <div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
+                <div className="flex justify-between  p-3 text-sm font-semibold">
+                    <h1 className="text-center p-2">Recent Users</h1>
+                    <Button>
+                        <Link to={"/dashboard?tab=users"}>See all</Link>
+                    </Button>
+                </div>
+            </div>
+      </div>
       </div>
     )
 }
+
