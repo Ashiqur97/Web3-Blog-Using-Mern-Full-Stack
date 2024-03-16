@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
+import { HiArrowNarrowUp, HiOutlineUserGroup } from "react-icons/hi";
 import { useSelector } from "react-redux";
 
 export default function DashboardComp() {
@@ -69,7 +70,15 @@ export default function DashboardComp() {
             <div className="">
                 <div className="">
                     <h3>Total Users</h3>
-                    <p>{totalUsers}</p>
+                    <p className='text-2xl'>{totalUsers}</p>
+                    <HiOutlineUserGroup className='bg-teal-600  text-white rounded-full text-5xl p-3 shadow-lg' />
+                </div>
+                <div className="flex gap-2 text-sm">
+                    <span className="text-green-500 flex items-center">
+                        <HiArrowNarrowUp />
+                        {lastMonthUsers}
+                    </span>
+                    <div className="">Last Month</div>
                 </div>
             </div>
         </div>
