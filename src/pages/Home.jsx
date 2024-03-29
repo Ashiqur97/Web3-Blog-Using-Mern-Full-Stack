@@ -1,8 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link } from 'react-router-dom';
 import CallToAction from '../components/CallToAction';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const  [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await fetch ('/api/post/getPosts');
+      const data = await res.json();
+      setPosts(data);
+    }
+  }, []);
+
   return (
     <div>
        <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto '>
